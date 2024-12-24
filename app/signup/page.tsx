@@ -8,7 +8,7 @@ import axios from "axios";
 
 
 export default function SignUP() {
-  const [saved,setSaved]=useState(false)
+  const [saved,setSaved]=useState("")
 
   const [user, setUser] = useState({
     username: "",
@@ -19,11 +19,16 @@ export default function SignUP() {
     try {
       const result = await axios.post("/api/user/signup", user);
     
-        setSaved(result.data.message)
+  if(result?.data?.message==="user saved successfuly"){
+    setSaved("Sign up successfuly")
+  }else{
+    setSaved("valid inforamtion requird")
+  }
       
 
     } catch (err) {
       console.log(err);
+       setSaved("An error occurred. Please try again.")
     }
   };
   return (
@@ -53,7 +58,11 @@ export default function SignUP() {
         {" "}
         <Link href={"/signin"}>Sign in</Link>
       </p>
-      {saved&&<p>{saved}</p>}
+      {saved && (
+  <p className={`my-2 ${saved.includes("success") ? "text-green-500" : "text-red-500"}`}>
+    {saved}
+  </p>
+)}
     </div>
   );
 }

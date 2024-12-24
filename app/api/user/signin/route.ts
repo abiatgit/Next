@@ -34,6 +34,6 @@ export async function POST(request: NextRequest) {
     }
   } catch (err) {
     console.log(err);
-    return NextResponse.json({ data:err});
+    return NextResponse.json({data:err});
   }
 }

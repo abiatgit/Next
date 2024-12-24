@@ -6,7 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 
 export default function SignIn() {
-  const [saved,setSaved]=useState(false)
+  const [saved,setSaved]=useState("")
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -15,8 +15,11 @@ export default function SignIn() {
 try{
   const respone=await axios.post("/api/user/signin",user)
   console.log(respone.data.message)
-if(respone.data.message==="user saved successfuly"){
-  setSaved(true)
+if(respone?.data?.message==="Successfuly logged"){
+  setSaved("user saved successfuly")
+}
+else{
+  setSaved("invalid credential")
 }
 }
 catch(err){
@@ -42,6 +45,11 @@ catch(err){
         onChange={(e) => setUser({ ...user, password: e.target.value })}
       />
       <Button onClick={onClickHandler}>Sign In</Button>
+      {saved && (
+  <p className={`my-2 ${saved.includes("successfuly") ? "text-green-500" : "text-red-500"}`}>
+    {saved}
+  </p>
+)}
       <p className="my-3">
         {" "}
         <Link href={"/signup"}>Sign up</Link>
