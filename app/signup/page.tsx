@@ -4,10 +4,13 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 
 export default function SignUP() {
+  const router = useRouter();
+
   const [saved,setSaved]=useState("")
 
   const [user, setUser] = useState({
@@ -21,6 +24,7 @@ export default function SignUP() {
     
   if(result?.data?.message==="user saved successfuly"){
     setSaved("Sign up successfuly")
+    router.push('/home');
   }else{
     setSaved("valid inforamtion requird")
   }
@@ -32,23 +36,24 @@ export default function SignUP() {
     }
   };
   return (
-    <div className="m-5">
-      <h1>Sign up</h1>
+    <div className="flex justify-center items-center h-screen">
+     <div>
+     <h1>Sign up</h1>
       <Input
         placeholder="User name"
-        className="w-1/6 my-2"
+        className=" w-full  my-2"
         value={user.username}
         onChange={(e) => setUser({ ...user, username: e.target.value })}
       />
       <Input
         placeholder="Email"
-        className="w-1/6  my-2"
+        className=" w-full  my-2"
         value={user.email}
         onChange={(e) => setUser({ ...user, email: e.target.value })}
       />
       <Input
         placeholder="Password"
-        className="w-1/6 my-2"
+       className=" w-full  my-2"
         value={user.password}
         onChange={(e) => setUser({ ...user, password: e.target.value })}
       />
@@ -63,6 +68,7 @@ export default function SignUP() {
     {saved}
   </p>
 )}
+     </div>
     </div>
   );
 }
